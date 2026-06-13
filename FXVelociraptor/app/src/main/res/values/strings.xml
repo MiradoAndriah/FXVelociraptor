@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FX Velociraptor</string>
+    <string name="bot_status_running">🟢 BOT ACTIF</string>
+    <string name="bot_status_stopped">⚫ BOT ARRÊTÉ</string>
+    <string name="bot_status_connecting">🔄 Connexion MT5…</string>
+    <string name="bot_status_error">🔴 ERREUR - Reconnexion…</string>
+    <string name="btn_start">▶  DÉMARRER LE BOT</string>
+    <string name="btn_stop">⏹  ARRÊTER LE BOT</string>
+    <string name="btn_emergency">🚨 FERMETURE D\'URGENCE</string>
+    <string name="notification_channel_name">FX Velociraptor Trading</string>
+    <string name="notification_channel_desc">Notifications du bot de trading</string>
+</resources>

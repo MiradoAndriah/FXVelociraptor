@@ -1,0 +1,6 @@
+-keep class com.fxvelociraptor.trading.** { *; }
+-keep class com.google.gson.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn okhttp3.**
+-dontwarn retrofit2.**

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00FF88</color>
+    <color name="colorPrimaryDark">#00AA55</color>
+    <color name="colorAccent">#FFAA00</color>
+    <color name="colorBackground">#0A0A0F</color>
+    <color name="colorSurface">#111118</color>
+    <color name="colorSurfaceVariant">#0D0D14</color>
+    <color name="colorOnBackground">#FFFFFF</color>
+    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorSuccess">#00FF88</color>
+    <color name="colorDanger">#FF4444</color>
+    <color name="colorWarning">#FFAA00</color>
+    <color name="colorMuted">#888888</color>
+    <color name="colorBuy">#00FF88</color>
+    <color name="colorSell">#FF4444</color>
+    <color name="colorSL">#FF6666</color>
+    <color name="colorTP">#00FF88</color>
+</resources>

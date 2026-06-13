@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0A0F">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Section MT5 Connection -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="🔌 CONNEXION MT5" android:textColor="#00FF88" android:textSize="13sp"
+            android:letterSpacing="0.1" android:layout_marginBottom="8dp" android:layout_marginTop="8dp"/>
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="#111118"
+            app:cardCornerRadius="10dp" android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="URL du serveur WebSocket (IP:Port de votre MT5 Bridge EA)"
+                    android:textColor="#888888" android:textSize="11sp" android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etServerUrl" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="ws://192.168.1.100:8080"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#333333" android:inputType="textUri"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Login MT5 (numéro de compte)" android:textColor="#888888"
+                    android:textSize="11sp" android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etLogin" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="12345678"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#333333" android:inputType="number"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Mot de passe MT5 (laisser vide pour garder l'actuel)"
+                    android:textColor="#888888" android:textSize="11sp" android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etPassword" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="••••••••"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#333333" android:inputType="textPassword"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Nom du serveur FBS" android:textColor="#888888"
+                    android:textSize="11sp" android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etServer" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="FBS-Real ou FBS-Demo"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#333333" android:layout_marginBottom="12dp"/>
+
+                <Button android:id="@+id/btnTestConnection" android:layout_width="match_parent"
+                    android:layout_height="44dp" android:text="🔄 TESTER LA CONNEXION"
+                    android:textColor="#FFFFFF" android:backgroundTint="#1A4A8A"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section Symboles -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="📊 MARCHÉS À TRADER" android:textColor="#00FF88" android:textSize="13sp"
+            android:letterSpacing="0.1" android:layout_marginBottom="8dp"/>
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="#111118"
+            app:cardCornerRadius="10dp" android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Symboles (séparés par virgule)" android:textColor="#888888"
+                    android:textSize="11sp" android:layout_marginBottom="4dp"/>
+                <EditText android:id="@+id/etSymbols" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:hint="EURUSD,XAUUSD,GBPUSD"
+                    android:textColor="#FFFFFF" android:textColorHint="#444444"
+                    android:backgroundTint="#333333" android:layout_marginBottom="12dp"/>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Timeframe" android:textColor="#888888" android:textSize="11sp"
+                            android:layout_marginBottom="4dp"/>
+                        <EditText android:id="@+id/etTimeframe" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:hint="H1"
+                            android:textColor="#FFFFFF" android:textColorHint="#444444"
+                            android:backgroundTint="#333333"/>
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Scan (secondes)" android:textColor="#888888" android:textSize="11sp"
+                            android:layout_marginBottom="4dp"/>
+                        <EditText android:id="@+id/etScanInterval" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:hint="30"
+                            android:textColor="#FFFFFF" android:textColorHint="#444444"
+                            android:backgroundTint="#333333" android:inputType="number"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section Gestion du Risque -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="💰 GESTION DU RISQUE" android:textColor="#00FF88" android:textSize="13sp"
+            android:letterSpacing="0.1" android:layout_marginBottom="8dp"/>
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="#111118"
+            app:cardCornerRadius="10dp" android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="12dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Risque par trade (%)" android:textColor="#888888" android:textSize="11sp"
+                            android:layout_marginBottom="4dp"/>
+                        <EditText android:id="@+id/etRiskPercent" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:hint="1.0"
+                            android:textColor="#FFFFFF" android:textColorHint="#444444"
+                            android:backgroundTint="#333333" android:inputType="numberDecimal"/>
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Ratio Risk:Reward" android:textColor="#888888" android:textSize="11sp"
+                            android:layout_marginBottom="4dp"/>
+                        <EditText android:id="@+id/etRrRatio" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:hint="2.0"
+                            android:textColor="#FFFFFF" android:textColorHint="#444444"
+                            android:backgroundTint="#333333" android:inputType="numberDecimal"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginBottom="12dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Float max avant coupure ($)" android:textColor="#FF6666" android:textSize="11sp"
+                            android:layout_marginBottom="4dp"/>
+                        <EditText android:id="@+id/etMaxFloat" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:hint="50"
+                            android:textColor="#FFFFFF" android:textColorHint="#444444"
+                            android:backgroundTint="#333333" android:inputType="numberDecimal"/>
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Max positions simultanées" android:textColor="#888888" android:textSize="11sp"
+                            android:layout_marginBottom="4dp"/>
+                        <EditText android:id="@+id/etMaxTrades" android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:hint="3"
+                            android:textColor="#FFFFFF" android:textColorHint="#444444"
+                            android:backgroundTint="#333333" android:inputType="number"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Fermeture auto si danger détecté"
+                        android:textColor="#FFFFFF" android:textSize="14sp"/>
+                    <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchAutoClose"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:checked="true"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="Notifications push"
+                        android:textColor="#FFFFFF" android:textSize="14sp"/>
+                    <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchNotifs"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:checked="true"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Section Sniper Entries -->
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="🎯 ENTRÉES SNIPER ACTIVES" android:textColor="#00FF88" android:textSize="13sp"
+            android:letterSpacing="0.1" android:layout_marginBottom="8dp"/>
+
+        <androidx.cardview.widget.CardView android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:cardBackgroundColor="#111118"
+            app:cardCornerRadius="10dp" android:layout_marginBottom="24dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:padding="16dp">
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="ST1 - Entrée directe sur zone" android:textColor="#FFFFFF" android:textSize="13sp"/>
+                    <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchST1"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="ST2 - Entrée QML (50% zone)" android:textColor="#FFFFFF" android:textSize="13sp"/>
+                    <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchST2"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="ST3 - Entrée sur pullback" android:textColor="#FFFFFF" android:textSize="13sp"/>
+                    <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchST3"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="ST4 - Entrée Order Block" android:textColor="#FFFFFF" android:textSize="13sp"/>
+                    <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchST4"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button android:id="@+id/btnSave" android:layout_width="match_parent"
+            android:layout_height="56dp" android:text="💾 SAUVEGARDER LA CONFIGURATION"
+            android:textColor="#FFFFFF" android:textSize="15sp" android:textStyle="bold"
+            android:backgroundTint="#00AA66" android:layout_marginBottom="32dp"/>
+
+    </LinearLayout>
+</ScrollView>
