@@ -3,9 +3,14 @@ package com.fxvelociraptor.trading.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.fxvelociraptor.trading.databinding.ActivitySettingsBinding
 import com.fxvelociraptor.trading.utils.MT5Config
 import com.fxvelociraptor.trading.utils.PrefsManager
+import com.fxvelociraptor.trading.model.BotConfig
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.TimeoutCancellationException
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -31,13 +36,9 @@ class SettingsActivity : AppCompatActivity() {
     private fun loadCurrentConfig() {
         val mt5 = prefs.loadMT5Config()
         val bot = prefs.loadBotConfig()
-
-        // MT5 Connection
         binding.etServerUrl.setText(mt5.serverUrl)
         binding.etLogin.setText(mt5.login)
         binding.etServer.setText(mt5.server)
-
-        // Bot Config
         binding.etRiskPercent.setText(bot.riskPercent.toString())
         binding.etRrRatio.setText(bot.rrRatio.toString())
         binding.etMaxFloat.setText(bot.maxFloatLoss.toString())
@@ -57,20 +58,15 @@ class SettingsActivity : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
             try {
                 val password = binding.etPassword.text.toString()
-
-                // Sauvegarder config MT5
                 prefs.saveMT5Config(MT5Config(
                     serverUrl = binding.etServerUrl.text.toString().trim(),
                     login = binding.etLogin.text.toString().trim(),
                     password = if (password.isNotEmpty()) password else prefs.loadMT5Config().password,
                     server = binding.etServer.text.toString().trim()
                 ))
-
-                // Sauvegarder config bot
                 val symbols = binding.etSymbols.text.toString()
                     .split(",").map { it.trim() }.filter { it.isNotEmpty() }
-
-                prefs.saveBotConfig(com.fxvelociraptor.trading.model.BotConfig(
+                prefs.saveBotConfig(BotConfig(
                     symbols = symbols,
                     timeframe = binding.etTimeframe.text.toString().trim().uppercase(),
                     riskPercent = binding.etRiskPercent.text.toString().toDoubleOrNull() ?: 1.0,
@@ -85,7 +81,6 @@ class SettingsActivity : AppCompatActivity() {
                     enableST3 = binding.switchST3.isChecked,
                     enableST4 = binding.switchST4.isChecked
                 ))
-
                 Toast.makeText(this, "✅ Configuration sauvegardée!", Toast.LENGTH_SHORT).show()
                 finish()
             } catch (e: Exception) {
@@ -109,45 +104,47 @@ class SettingsActivity : AppCompatActivity() {
             binding.btnTestConnection.text = "⏳ Test en cours..."
             binding.btnTestConnection.isEnabled = false
 
-            // Test de connexion
             val testClient = com.fxvelociraptor.trading.api.MT5ApiClient(url, login, password, server)
             testClient.connect()
 
-            // Observer le résultat pendant 10 secondes
-            var timeoutJob: kotlinx.coroutines.Job? = null
-            val scope = androidx.lifecycle.lifecycleScope
-            timeoutJob = scope.launch {
-                kotlinx.coroutines.withTimeout(10000) {
-                    testClient.connectionState.collect { state ->
-                        when (state) {
-                            com.fxvelociraptor.trading.api.MT5ApiClient.ConnectionState.AUTHENTICATED -> {
-                                runOnUiThread {
-                                    Toast.makeText(this@SettingsActivity, "✅ Connexion MT5 réussie!", Toast.LENGTH_LONG).show()
-                                    binding.btnTestConnection.text = "✅ CONNEXION OK"
-                                    binding.btnTestConnection.isEnabled = true
+            lifecycleScope.launch {
+                try {
+                    withTimeout(10000) {
+                        testClient.connectionState.collect { state ->
+                            when (state) {
+                                com.fxvelociraptor.trading.api.MT5ApiClient.ConnectionState.AUTHENTICATED -> {
+                                    runOnUiThread {
+                                        Toast.makeText(this@SettingsActivity, "✅ Connexion MT5 réussie!", Toast.LENGTH_LONG).show()
+                                        binding.btnTestConnection.text = "✅ CONNEXION OK"
+                                        binding.btnTestConnection.isEnabled = true
+                                    }
+                                    testClient.disconnect()
+                                    return@collect
                                 }
-                                testClient.disconnect()
-                                timeoutJob?.cancel()
-                            }
-                            com.fxvelociraptor.trading.api.MT5ApiClient.ConnectionState.ERROR -> {
-                                runOnUiThread {
-                                    Toast.makeText(this@SettingsActivity, "❌ Échec connexion - Vérifiez vos paramètres et que l'EA bridge tourne sur MT5", Toast.LENGTH_LONG).show()
-                                    binding.btnTestConnection.text = "🔄 TESTER LA CONNEXION"
-                                    binding.btnTestConnection.isEnabled = true
+                                com.fxvelociraptor.trading.api.MT5ApiClient.ConnectionState.ERROR -> {
+                                    runOnUiThread {
+                                        Toast.makeText(this@SettingsActivity, "❌ Échec connexion", Toast.LENGTH_LONG).show()
+                                        binding.btnTestConnection.text = "🔄 TESTER LA CONNEXION"
+                                        binding.btnTestConnection.isEnabled = true
+                                    }
+                                    testClient.disconnect()
+                                    return@collect
                                 }
-                                testClient.disconnect()
-                                timeoutJob?.cancel()
+                                else -> {}
                             }
-                            else -> {}
                         }
                     }
+                } catch (e: TimeoutCancellationException) {
+                    runOnUiThread {
+                        Toast.makeText(this@SettingsActivity, "⏱️ Timeout - Vérifiez l'IP et le port", Toast.LENGTH_LONG).show()
+                        binding.btnTestConnection.text = "🔄 TESTER LA CONNEXION"
+                        binding.btnTestConnection.isEnabled = true
+                    }
+                    testClient.disconnect()
                 }
             }
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
+    override fun onSupportNavigateUp(): Boolean { onBackPressed(); return true }
 }
